@@ -2,10 +2,11 @@ PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-SELECT ?label (CONCAT('[',group_concat(distinct ?s;separator=','),']') as ?ss)
+SELECT ?label (CONCAT('[',group_concat(distinct SUBSTR(STR(?s), 32);separator=','),']') as ?ss)
 WHERE {
     ?s a owl:Class .
     ?s rdfs:label ?label .
-    FILTER(regex(str(?s), "ECO")).}
+    FILTER(regex(str(?s), "ECO_[0-9]{3}")).}
+
 
 GROUP BY ?label ?ss
